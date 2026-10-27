@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My GitHub Portfolio</title>
+<meta name="description" content="A personal portfolio that loads projects live from GitHub.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a left "ID card" column with profile + languages, and a right
+   column of repositories and recent activity; stacks to one column on phones. */
+:root {
+  --bg: #eef1f5;
+  --surface: #ffffff;
+  --fg: #141b26;
+  --muted: #5b6678;
+  --line: #d9dfe8;
+  --accent: #2d4bd6;
+  --accent-soft: #e4e9fd;
+  --warn: #a4570b;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141c; --surface: #171e29; --fg: #e8edf5; --muted: #94a0b4;
+    --line: #273142; --accent: #8ea2ff; --accent-soft: #1f2a4d; --warn: #f0a85a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141c; --surface: #171e29; --fg: #e8edf5; --muted: #94a0b4;
+  --line: #273142; --accent: #8ea2ff; --accent-soft: #1f2a4d; --warn: #f0a85a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 15px/1.55 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 56px; }
+
+/* top bar */
+.bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+.brand { font: 500 13px var(--font-mono); color: var(--muted); letter-spacing: .02em; }
+.brand b { color: var(--fg); font-weight: 500; }
+.search { display: flex; gap: 8px; flex: 1 1 260px; max-width: 380px; }
+.search input {
+  flex: 1; min-width: 0; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--surface); color: var(--fg); font: 14px var(--font-mono);
+}
+button, select {
+  font: 600 14px var(--font-body); padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--fg);
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+button.primary:hover { filter: brightness(1.08); }
+
+.grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 32px; align-items: start; }
+@media (max-width: 820px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* profile column */
+.profile { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 20px; }
+@media (max-width: 820px) { .profile { position: static; } }
+.avatar { width: 112px; height: 112px; border-radius: 50%; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); background: var(--line); }
+h1 { font: 700 clamp(28px, 4vw, 36px)/1.05 var(--font-display); margin: 0; letter-spacing: -.02em; text-wrap: balance; }
+.handle { font: 15px var(--font-mono); color: var(--muted); }
+.bio { margin: 0; }
+.meta { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; color: var(--muted); font-size: 14px; }
+.meta li { display: flex; gap: 8px; align-items: baseline; min-width: 0; overflow-wrap: anywhere; }
+.meta .k { font: 11px var(--font-mono); text-transform: uppercase; letter-spacing: .08em; width: 62px; flex: none; }
+
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.stat { background: var(--surface); padding: 12px 14px; }
+.stat .n { font: 700 24px/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
+.stat .l { font: 11px var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+
+.label { font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 10px; }
+.langbar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--line); gap: 2px; }
+.langbar span { display: block; height: 100%; }
+.langlist { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; font-size: 14px; }
+.langlist li { display: flex; align-items: center; gap: 8px; }
+.langlist .pct { margin-left: auto; font: 12px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; display: inline-block; }
+
+.cta { display: inline-flex; justify-content: center; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font-weight: 600; color: var(--fg); }
+
+/* main column */
+section + section { margin-top: 40px; }
+.sechead { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; justify-content: space-between; margin-bottom: 14px; }
+h2 { font: 700 22px var(--font-display); margin: 0; letter-spacing: -.01em; }
+h2 small { font: 13px var(--font-mono); color: var(--muted); margin-left: 6px; font-weight: 400; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls input[type=search] { padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); font: 14px var(--font-body); width: 180px; max-width: 100%; }
+.controls select { padding: 8px 10px; font-weight: 500; }
+.check { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; color: var(--muted); }
+
+.repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.repo {
+  display: flex; flex-direction: column; gap: 8px; padding: 16px; min-width: 0;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  transition: border-color .15s, transform .15s;
+}
+.repo:hover { border-color: var(--accent); transform: translateY(-1px); }
+.repo h3 { margin: 0; font: 600 16px var(--font-mono); overflow-wrap: anywhere; }
+.repo p { margin: 0; color: var(--muted); font-size: 14px; flex: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font: 12px var(--font-mono); padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.tag.fork { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+.repo .foot { display: flex; flex-wrap: wrap; gap: 14px; font: 12px var(--font-mono); color: var(--muted); align-items: center; }
+.repo .foot span { display: inline-flex; gap: 5px; align-items: center; }
+.more { margin-top: 16px; text-align: center; }
+
+.feed { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--line); }
+.feed li { position: relative; padding: 0 0 16px 20px; }
+.feed li::before { content: ""; position: absolute; left: -6px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
+.feed .what { overflow-wrap: anywhere; }
+.feed .when { font: 12px var(--font-mono); color: var(--muted); }
+.feed .msg { display: block; font: 13px var(--font-mono); color: var(--muted); margin-top: 2px; overflow-wrap: anywhere; }
+
+.notice { padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.notice.err { border-color: var(--warn); }
+.notice.err strong { color: var(--warn); }
+.empty { color: var(--muted); padding: 12px 0; }
+
+.skel { background: linear-gradient(90deg, var(--line), var(--surface), var(--line)); background-size: 200% 100%; animation: sh 1.2s infinite linear; border-radius: 6px; }
+@keyframes sh { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .skel { animation: none; } .repo { transition: none; } }
+
+footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font: 12px var(--font-mono); display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="brand"><b>~/portfolio</b> · built on the GitHub API</div>
+    <form class="search" id="searchForm" role="search">
+      <input id="userInput" type="text" placeholder="GitHub username" aria-label="GitHub username" autocomplete="off" spellcheck="false">
+      <button class="primary" type="submit">Load</button>
+    </form>
+  </header>
+
+  <div id="error" hidden></div>
+
+  <div class="grid" id="content">
+    <aside class="profile" id="profile">
+      <div class="skel avatar"></div>
+      <div class="skel" style="height:32px;width:70%"></div>
+      <div class="skel" style="height:60px"></div>
+    </aside>
+
+    <main>
+      <section>
+        <div class="sechead">
+          <h2>Projects <small id="repoCount"></small></h2>
+          <div class="controls">
+            <input id="filter" type="search" placeholder="Filter projects" aria-label="Filter projects">
+            <select id="sort" aria-label="Sort projects">
+              <option value="pushed">Recently updated</option>
+              <option value="stars">Most stars</option>
+              <option value="name">Name</option>
+            </select>
+            <label class="check"><input id="forks" type="checkbox"> Show forks</label>
+          </div>
+        </div>
+        <div class="repos" id="repos">
+          <div class="skel" style="height:150px"></div><div class="skel" style="height:150px"></div><div class="skel" style="height:150px"></div>
+        </div>
+        <div class="more"><button id="moreBtn" type="button" hidden>Show more projects</button></div>
+      </section>
+
+      <section>
+        <div class="sechead"><h2>Recent activity</h2></div>
+        <ul class="feed" id="feed"><li><div class="skel" style="height:40px"></div></li></ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <span>Data loads live from api.github.com each visit.</span>
+    <span id="updated"></span>
+  </footer>
+</div>
+
+<script>
+/* ===== 1. PUT YOUR GITHUB USERNAME HERE ===== */
+const GITHUB_USERNAME = "amitnaik3211-dev";
+/* ============================================ */
+
+const API = "https://api.github.com";
+const PAGE = 12;
+const LANG_COLORS = {
+  JavaScript:"#f1e05a", TypeScript:"#3178c6", Python:"#3572A5", Java:"#b07219", "C++":"#f34b7d", C:"#555555",
+  "C#":"#178600", Go:"#00ADD8", Rust:"#dea584", Ruby:"#701516", PHP:"#4F5D95", Swift:"#F05138", Kotlin:"#A97BFF",
+  Dart:"#00B4AB", HTML:"#e34c26", CSS:"#563d7c", SCSS:"#c6538c", Shell:"#89e051", Vue:"#41b883", Svelte:"#ff3e00",
+  "Jupyter Notebook":"#DA5B0B", R:"#198CE7", Lua:"#000080", Elixir:"#6e4a7e", Haskell:"#5e5086", Scala:"#c22d40",
+  "Objective-C":"#438eff", Dockerfile:"#384d54", Makefile:"#427819", MATLAB:"#e16737", Perl:"#0298c3", Clojure:"#db5855"
+};
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const fmt = (n) => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, "") + "k" : String(n);
+const langColor = (l) => LANG_COLORS[l] || "#8a94a6";
+function ago(iso) {
+  const s = (Date.now() - new Date(iso)) / 1000;
+  const units = [["year", 31536000], ["month", 2592000], ["week", 604800], ["day", 86400], ["hour", 3600], ["minute", 60]];
+  for (const [u, sec] of units) { const v = Math.floor(s / sec); if (v >= 1) return `${v} ${u}${v > 1 ? "s" : ""} ago`; }
+  return "just now";
+}
+
+let state = { repos: [], shown: PAGE, user: null };
+
+async function gh(path) {
+  const key = "gh:" + path;
+  try { const c = JSON.parse(sessionStorage.getItem(key)); if (c && Date.now() - c.t < 10 * 60e3) return c.d; } catch {}
+  const r = await fetch(API + path, { headers: { Accept: "application/vnd.github+json" } });
+  if (r.status === 404) throw { kind: "notfound" };
+  if (r.status === 403 || r.status === 429) {
+    const reset = r.headers.get("x-ratelimit-reset");
+    throw { kind: "rate", reset: reset ? new Date(reset * 1000) : null };
+  }
+  if (!r.ok) throw { kind: "http", status: r.status };
+  const d = await r.json();
+  try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); } catch {}
+  return d;
+}
+
+function showError(e, name) {
+  const box = $("error");
+  let msg;
+  if (e.kind === "notfound") msg = `<strong>No GitHub user called “${esc(name)}”.</strong> Check the spelling and try again.`;
+  else if (e.kind === "rate") msg = `<strong>GitHub’s hourly limit was reached.</strong> GitHub allows 60 requests an hour without signing in. Try again ${e.reset ? "after " + e.reset.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "in a little while"}.`;
+  else msg = `<strong>Couldn’t reach GitHub.</strong> Check your internet connection and reload the page.`;
+  box.className = "notice err"; box.innerHTML = msg; box.hidden = false;
+  $("content").hidden = true;
+}
+
+function renderProfile(u, repos) {
+  document.title = `${u.name || u.login} · Portfolio`;
+  const own = repos.filter(r => !r.fork);
+  const stars = own.reduce((a, r) => a + r.stargazers_count, 0);
+  const forks = own.reduce((a, r) => a + r.forks_count, 0);
+  const langs = {};
+  own.forEach(r => { if (r.language) langs[r.language] = (langs[r.language] || 0) + 1; });
+  const total = Object.values(langs).reduce((a, b) => a + b, 0);
+  const top = Object.entries(langs).sort((a, b) => b[1] - a[1]);
+  const shown = top.slice(0, 6);
+  const other = top.slice(6).reduce((a, [, n]) => a + n, 0);
+  if (other) shown.push(["Other", other]);
+
+  const site = u.blog ? (u.blog.startsWith("http") ? u.blog : "https://" + u.blog) : "";
+  const meta = [
+    u.company && ["work", esc(u.company)],
+    u.location && ["based", esc(u.location)],
+    site && ["site", `<a href="${esc(site)}" target="_blank" rel="noopener">${esc(u.blog.replace(/^https?:\/\//, ""))}</a>`],
+    u.twitter_username && ["x", `<a href="https://x.com/${esc(u.twitter_username)}" target="_blank" rel="noopener">@${esc(u.twitter_username)}</a>`],
+    ["joined", new Date(u.created_at).toLocaleDateString([], { month: "long", year: "numeric" })]
+  ].filter(Boolean);
+
+  $("profile").innerHTML = `
+    <img class="avatar" src="${esc(u.avatar_url)}&s=240" alt="${esc(u.login)}'s avatar" width="112" height="112">
+    <div>
+      <h1>${esc(u.name || u.login)}</h1>
+      <div class="handle">@${esc(u.login)}</div>
+    </div>
+    ${u.bio ? `<p class="bio">${esc(u.bio)}</p>` : ""}
+    <ul class="meta">${meta.map(([k, v]) => `<li><span class="k">${k}</span><span>${v}</span></li>`).join("")}</ul>
+    <div class="stats">
+      <div class="stat"><div class="n">${fmt(u.public_repos)}</div><div class="l">Repos</div></div>
+      <div class="stat"><div class="n">${fmt(stars)}</div><div class="l">Stars earned</div></div>
+      <div class="stat"><div class="n">${fmt(u.followers)}</div><div class="l">Followers</div></div>
+      <div class="stat"><div class="n">${fmt(forks)}</div><div class="l">Times forked</div></div>
+    </div>
+    ${total ? `<div>
+      <p class="label">Languages · by project</p>
+      <div class="langbar" role="img" aria-label="Language breakdown">${shown.map(([l, n]) => `<span style="width:${(n / total * 100).toFixed(2)}%;background:${langColor(l)}" title="${esc(l)}"></span>`).join("")}</div>
+      <ul class="langlist">${shown.map(([l, n]) => `<li><span class="dot" style="background:${langColor(l)}"></span>${esc(l)}<span class="pct">${Math.round(n / total * 100)}%</span></li>`).join("")}</ul>
+    </div>` : ""}
+    <a class="cta" href="${esc(u.html_url)}" target="_blank" rel="noopener">Follow on GitHub →</a>`;
+}
+
+function renderRepos() {
+  const q = $("filter").value.trim().toLowerCase();
+  const withForks = $("forks").checked;
+  const sort = $("sort").value;
+  let list = state.repos.filter(r => withForks || !r.fork);
+  if (q) list = list.filter(r => [r.name, r.description, r.language, ...(r.topics || [])].join(" ").toLowerCase().includes(q));
+  list.sort(sort === "stars" ? (a, b) => b.stargazers_count - a.stargazers_count
+          : sort === "name" ? (a, b) => a.name.localeCompare(b.name)
+          : (a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
+  $("repoCount").textContent = list.length ? `${list.length}` : "";
+  const page = list.slice(0, state.shown);
+  $("repos").innerHTML = page.length ? page.map(r => `
+    <article class="repo">
+      <h3><a href="${esc(r.html_url)}" target="_blank" rel="noopener">${esc(r.name)}</a></h3>
+      <p>${esc(r.description || "No description yet.")}</p>
+      ${(r.topics?.length || r.fork) ? `<div class="tags">${r.fork ? `<span class="tag fork">fork</span>` : ""}${(r.topics || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>` : ""}
+      <div class="foot">
+        ${r.language ? `<span><span class="dot" style="background:${langColor(r.language)}"></span>${esc(r.language)}</span>` : ""}
+        <span title="Stars">★ ${fmt(r.stargazers_count)}</span>
+        <span title="Forks">⑂ ${fmt(r.forks_count)}</span>
+        <span>updated ${ago(r.pushed_at)}</span>
+        ${r.homepage ? `<a href="${esc(r.homepage)}" target="_blank" rel="noopener">live demo</a>` : ""}
+      </div>
+    </article>`).join("") : `<div class="empty">No projects match.</div>`;
+  $("moreBtn").hidden = list.length <= state.shown;
+}
+
+function describe(e) {
+  const repo = `<a href="https://github.com/${esc(e.repo.name)}" target="_blank" rel="noopener">${esc(e.repo.name)}</a>`;
+  const p = e.payload || {};
+  switch (e.type) {
+    case "PushEvent": {
+      const n = p.size ?? p.commits?.length ?? 1;
+      const msg = p.commits?.[p.commits.length - 1]?.message?.split("\n")[0];
+      return `Pushed ${n} commit${n === 1 ? "" : "s"} to ${repo}${msg ? `<span class="msg">${esc(msg)}</span>` : ""}`;
+    }
+    case "CreateEvent": return p.ref_type === "repository" ? `Created ${repo}` : `Created ${esc(p.ref_type)} <code>${esc(p.ref)}</code> in ${repo}`;
+    case "WatchEvent": return `Starred ${repo}`;
+    case "ForkEvent": return `Forked ${repo}`;
+    case "PullRequestEvent": return `${p.action === "closed" && p.pull_request?.merged ? "Merged" : esc(p.action[0].toUpperCase() + p.action.slice(1))} a pull request in ${repo}${p.pull_request?.title ? `<span class="msg">${esc(p.pull_request.title)}</span>` : ""}`;
+    case "IssuesEvent": return `${esc(p.action[0].toUpperCase() + p.action.slice(1))} an issue in ${repo}${p.issue?.title ? `<span class="msg">${esc(p.issue.title)}</span>` : ""}`;
+    case "IssueCommentEvent": return `Commented on an issue in ${repo}`;
+    case "ReleaseEvent": return `Published release ${esc(p.release?.tag_name || "")} of ${repo}`;
+    case "PublicEvent": return `Made ${repo} public`;
+    default: return null;
+  }
+}
+
+function renderFeed(events) {
+  const items = events.map(e => [describe(e), e.created_at]).filter(([d]) => d).slice(0, 10);
+  $("feed").innerHTML = items.length
+    ? items.map(([d, t]) => `<li><div class="what">${d}</div><div class="when">${ago(t)}</div></li>`).join("")
+    : `<li class="empty">No public activity in the last 90 days.</li>`;
+}
+
+async function load(name) {
+  name = name.trim().replace(/^@/, "");
+  if (!name) return;
+  $("userInput").value = name;
+  $("error").hidden = true; $("content").hidden = false;
+  try {
+    const [u, repos] = await Promise.all([gh(`/users/${encodeURIComponent(name)}`), gh(`/users/${encodeURIComponent(name)}/repos?per_page=100&sort=pushed`)]);
+    state = { repos, shown: PAGE, user: u };
+    renderProfile(u, repos);
+    renderRepos();
+    $("updated").textContent = `Loaded ${new Date().toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}`;
+    gh(`/users/${encodeURIComponent(name)}/events/public?per_page=50`).then(renderFeed).catch(() => renderFeed([]));
+  } catch (e) { showError(e, name); }
+}
+
+$("searchForm").addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const name = $("userInput").value.trim();
+  if (!name) return;
+  try { const url = new URL(location.href); url.searchParams.set("user", name); history.replaceState(null, "", url); } catch {}
+  load(name);
+});
+["filter", "sort", "forks"].forEach(id => $(id).addEventListener("input", () => { state.shown = PAGE; renderRepos(); }));
+$("moreBtn").addEventListener("click", () => { state.shown += PAGE; renderRepos(); });
+
+let start = GITHUB_USERNAME;
+try { start = new URLSearchParams(location.search).get("user") || GITHUB_USERNAME; } catch {}
+load(start);
+</script>
+</body>
+</html>
