@@ -1,34 +1,19 @@
-# My Website
+# Nordrobo Automation website
 
-My personal portfolio site. All of its code lives in this repository, and
-GitHub Pages publishes it automatically from here.
+The website for **Nordrobo Automation**, which supplies and repairs industrial automation parts: servo drives and motors, HMIs, PLCs and industrial electronics.
 
 **Live site:** https://amitnaik3211-dev.github.io
 
-## What's in this repository
+All of the website's code lives in this repository. GitHub Pages republishes the site within a minute or two of any change here.
+
+## Files
 
 | File | What it is |
 |------|------------|
-| `index.html` | The whole website: layout, styles and code |
+| `index.html` | The whole website: content, brand styling (Electric Blue #2563EB, Navy #0B1F3B, Montserrat) and the quote form |
 | `README.md` | This page |
-| `.gitignore` | Tells Git which junk files to skip (like `.DS_Store`) |
+| `.gitignore` | Keeps Mac junk files out of the repository |
 
-## How it works
+## Contact details
 
-- The site loads my profile, projects and recent activity live from GitHub.
-- Every time I change a file in this repository, GitHub Pages republishes
-  the site within about a minute.
-
-## Making changes
-
-**On github.com:** open a file, click the pencil icon, edit, then click
-**Commit changes**.
-
-**On my computer:** edit the files in this folder, then commit and push them
-with GitHub Desktop (or `git add . && git commit -m "message" && git push`).
-
-## Adding more files
-
-Put images in an `images/` folder, extra pages next to `index.html`
-(for example `about.html`), and link to them from `index.html`. Anything
-committed here becomes part of the site.
+Open `index.html`, find `const CONTACT = {` near the bottom, and fill in the email, phone, WhatsApp number and service area. The quote form sends requests to that email address.
