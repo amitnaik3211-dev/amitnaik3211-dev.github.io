@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nordrobo Automation</title>
 <meta name="description" content="Servo drive, motor, HMI and PLC repair with 3–7 business day turnaround, 24/7 support and a 12-month warranty. New and refurbished replacement units available.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230B1F3B%27/%3E%3Cpath d=%27M7 25V9.5L21.5 25H25V7h-4v15.5L8.5 7H7z%27 fill=%27%232563EB%27/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%22-4 -12 246 246%22%3E%3Crect x=%22-4%22 y=%22-12%22 width=%22246%22 height=%22246%22 rx=%2250%22 fill=%22%230B1F3B%22/%3E%3Cdefs%3E%3ClinearGradient id=%22gL%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%231e5fe0%22/%3E%3Cstop offset=%22.3%22 stop-color=%22%232d84f4%22/%3E%3Cstop offset=%221%22 stop-color=%22%232a93f8%22/%3E%3C/linearGradient%3E%3ClinearGradient id=%22gR%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%232a5fe8%22/%3E%3Cstop offset=%221%22 stop-color=%22%232f6ff2%22/%3E%3C/linearGradient%3E%3ClinearGradient id=%22gD%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%2316c4ff%22/%3E%3Cstop offset=%22.5%22 stop-color=%22%232b8ef7%22/%3E%3Cstop offset=%221%22 stop-color=%22%232563EB%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d=%22M22 52 L78 100 L78 178 L30 206 Q22 210 22 200 Z%22 fill=%22url%28%23gL%29%22/%3E%3Cpath d=%22M157 44 L206 17 Q215 12 215 22 L215 140 L157 140 Z%22 fill=%22url%28%23gR%29%22/%3E%3Cpath d=%22M22 46 Q22 32 34 25 L50 16 Q61 10 70 19 L215 142 L215 194 Q215 205 205 208 L196 210 Q189 211 184 205 Z%22 fill=%22url%28%23gD%29%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -207,6 +207,13 @@ input.mono { font-family: var(--font-mono); font-size: 15px; }
 .finder button:hover { background: #3a76f2; }
 .cats { margin-top: 14px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; }
 .cats span + span::before { content: "|"; margin-right: 12px; color: var(--line); }
+.cgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.ccard { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 22px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.ccard svg { width: 28px; height: 28px; color: var(--accent); }
+.ccard .k { font: 500 11px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.ccard .v { font-size: 17px; font-weight: 600; overflow-wrap: anywhere; text-decoration: none; color: var(--fg); }
+.ccard a.v:hover { color: var(--accent); }
+.ccard .v.soon { color: var(--muted); font-weight: 500; font-style: italic; }
 footer { padding-block: 36px 44px; color: var(--muted); font-size: 14px; }
 footer .inner { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; }
 footer nav { display: flex; flex-wrap: wrap; gap: 20px; }
@@ -218,15 +225,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--fg); }
 <header class="top">
   <div class="inner">
     <a class="logo" href="#top" aria-label="Nordrobo Automation home">
-      <svg width="36" height="32" viewBox="0 0 36 32" aria-hidden="true">
-        <defs>
-          <linearGradient id="nA" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1d4ed8"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
-          <linearGradient id="nB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#2563EB"/></linearGradient>
-        </defs>
-        <path d="M2 30V6a4 4 0 0 1 4-4h4v28H2z" fill="url(#nA)"/>
-        <path d="M2 2h8l24 28h-8L2 2z" fill="url(#nB)"/>
-        <path d="M26 2h8v28h-8z" fill="url(#nA)"/>
-      </svg>
+      <svg width="34" height="34" viewBox="16 8 206 206" aria-hidden="true"><defs><linearGradient id="gL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e5fe0"/><stop offset=".3" stop-color="#2d84f4"/><stop offset="1" stop-color="#2a93f8"/></linearGradient><linearGradient id="gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a5fe8"/><stop offset="1" stop-color="#2f6ff2"/></linearGradient><linearGradient id="gD" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16c4ff"/><stop offset=".5" stop-color="#2b8ef7"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs><path d="M22 52 L78 100 L78 178 L30 206 Q22 210 22 200 Z" fill="url(#gL)"/><path d="M157 44 L206 17 Q215 12 215 22 L215 140 L157 140 Z" fill="url(#gR)"/><path d="M22 46 Q22 32 34 25 L50 16 Q61 10 70 19 L215 142 L215 194 Q215 205 205 208 L196 210 Q189 211 184 205 Z" fill="url(#gD)"/></svg>
       <span class="word"><b>NORDROBO</b><small>INDUSTRIAL AUTOMATION PARTS</small></span>
     </a>
     <nav class="links" aria-label="Main">
@@ -234,6 +233,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--fg); }
       <a href="#brands">Brands</a>
       <a href="#why">Why us</a>
       <a href="#process">How it works</a>
+      <a href="#contact">Contact</a>
     </nav>
     <a class="btn primary" href="#quote">Request a quote</a>
   </div>
@@ -396,7 +396,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--fg); }
         <p class="label">Request a quote</p>
         <h2 style="margin-top:14px">Tell us what's down</h2>
         <p class="lead" style="margin-top:16px">Include the brand and model number from the unit's label. The more detail you give, the faster we can quote.</p>
-        <ul class="contact-list" id="contactList"></ul>
+        <p style="margin-top:24px"><a href="#contact" style="color:var(--accent);font-weight:600;text-decoration:none">Prefer to call or message? See our contact details →</a></p>
       </div>
 
       <form id="quoteForm" novalidate>
@@ -438,12 +438,22 @@ footer a { text-decoration: none; } footer a:hover { color: var(--fg); }
       </form>
     </div>
   </section>
+  <section class="block contact" id="contact">
+    <div class="inner">
+      <div class="head">
+        <p class="label">Contact</p>
+        <h2>Talk to Nordrobo</h2>
+        <p class="lead">Line down right now? Call or message us any time. Our support runs 24/7.</p>
+      </div>
+      <div class="cgrid" id="contactGrid"></div>
+    </div>
+  </section>
 </main>
 
 <footer>
   <div class="inner">
     <span>© <span id="yr"></span> Nordrobo Automation · Industrial automation parts</span>
-    <nav aria-label="Footer"><a href="#services">Services</a><a href="#brands">Brands</a><a href="#quote">Request a quote</a></nav>
+    <nav aria-label="Footer"><a href="#services">Services</a><a href="#brands">Brands</a><a href="#quote">Request a quote</a><a href="#contact">Contact</a></nav>
   </div>
 </footer>
 
@@ -453,20 +463,30 @@ const CONTACT = {
   email: "",      // e.g. "sales@nordrobo.com"  (quote requests are sent here)
   phone: "",      // e.g. "+1 416 555 0100"
   whatsapp: "",   // digits only with country code, e.g. "14165550100"
-  area: ""        // e.g. "Toronto, ON · Shipping across North America"
+  area: "",       // e.g. "Toronto, ON · Shipping across North America"
+  hours: ""       // leave "" to show "24/7, every day"
 };
 /* ======================================================================== */
 
 document.getElementById("yr").textContent = new Date().getFullYear();
 
-const list = document.getElementById("contactList");
-const rows = [];
-if (CONTACT.phone) rows.push(["Phone · 24/7", `<a href="tel:${CONTACT.phone.replace(/[^+\d]/g, "")}">${CONTACT.phone}</a>`]);
-if (CONTACT.email) rows.push(["Email", `<a href="mailto:${CONTACT.email}">${CONTACT.email}</a>`]);
-if (CONTACT.whatsapp) rows.push(["WhatsApp", `<a href="https://wa.me/${CONTACT.whatsapp}" target="_blank" rel="noopener">Message us</a>`]);
-if (CONTACT.area) rows.push(["Service area", `<span>${CONTACT.area}</span>`]);
-list.innerHTML = rows.map(([k, v]) => `<li><span class="k">${k}</span>${v}</li>`).join("");
-list.hidden = rows.length === 0;
+const ICONS = {
+  phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
+  email: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  whatsapp: '<path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/>',
+  area: '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  hours: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+};
+const cards = [
+  ["phone", "Phone · 24/7", CONTACT.phone && `<a class="v" href="tel:${CONTACT.phone.replace(/[^+\d]/g, "")}">${CONTACT.phone}</a>`],
+  ["email", "Email", CONTACT.email && `<a class="v" href="mailto:${CONTACT.email}">${CONTACT.email}</a>`],
+  ["whatsapp", "WhatsApp", CONTACT.whatsapp && `<a class="v" href="https://wa.me/${CONTACT.whatsapp}" target="_blank" rel="noopener">Message us</a>`],
+  ["area", "Location / service area", CONTACT.area && `<span class="v">${CONTACT.area}</span>`],
+  ["hours", "Support hours", `<span class="v">${CONTACT.hours || "24/7, every day"}</span>`]
+];
+document.getElementById("contactGrid").innerHTML = cards.map(([ic, k, v]) =>
+  `<div class="ccard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[ic]}</svg><span class="k">${k}</span>${v || '<span class="v soon">Coming soon</span>'}</div>`
+).join("");
 
 document.getElementById("finder").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -492,7 +512,7 @@ form.addEventListener("submit", (e) => {
   }
   if (!CONTACT.email) {
     msg.className = "form-msg err"; msg.hidden = false;
-    msg.textContent = "Online quote requests aren't set up yet. Please contact us directly.";
+    msg.textContent = "Online quote requests open soon. Please see our contact details below.";
     return;
   }
   const d = Object.fromEntries(new FormData(form));
