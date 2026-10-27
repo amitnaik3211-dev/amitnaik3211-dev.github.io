@@ -2,9 +2,9 @@
 
 The website for **Nordrobo Automation**, which supplies and repairs industrial automation parts: servo drives and motors, HMIs, PLCs and industrial electronics.
 
-**Live site:** https://amitnaik3211-dev.github.io
+**Live site:** https://nordrobo-automation.vercel.app
 
-All of the website's code lives in this repository. GitHub Pages republishes the site within a minute or two of any change here.
+All of the website's code lives in this repository. Vercel republishes the site automatically, about 30 seconds after any change to the `main` branch.
 
 ## Files
 
